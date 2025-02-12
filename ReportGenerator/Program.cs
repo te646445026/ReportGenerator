@@ -122,36 +122,47 @@ namespace ReportGeneratorPro
             
                 using var doc = DocX.Load(templatePath);
 
-                // 找到表格并写入数据
-                var resultTable = doc.Tables.LastOrDefault(t => t.Rows.Count >= 6); // 假设结果表格是第一个表格
+            // 查找包含 “编号：BTE-JX” 的段落
+            var targetParagraph = doc.Paragraphs.FirstOrDefault(p => p.Text.Contains("编号：BTE-JX"));
+
+            if (targetParagraph != null)
+            {
+                
+
+                // 添加新的文本到段落
+                targetParagraph.Append(data.Number);
+            }
+
+            // 找到表格并写入数据
+            var resultTable = doc.Tables.LastOrDefault(t => t.Rows.Count >= 6); // 假设结果表格是第一个表格
                 if (resultTable != null)
                 {
                     // 基本信息
-                    SetTableCellText(resultTable.Rows[1].Cells[1], data.UsingUnit ?? "—");
-                    SetTableCellText(resultTable.Rows[1].Cells[2], data.EntrustedUnit ?? "—");
-                    SetTableCellText(resultTable.Rows[1].Cells[3], data.ElevatorRegistrationCode ?? "—");
-                    SetTableCellText(resultTable.Rows[1].Cells[4], data.ElevatorFactoryCode ?? "—");
+                    SetTableCellText(resultTable.Rows[0].Cells[1], data.UsingUnit ?? "—");
+                    SetTableCellText(resultTable.Rows[1].Cells[1], data.EntrustedUnit ?? "—");
+                    SetTableCellText(resultTable.Rows[2].Cells[1], data.ElevatorRegistrationCode ?? "—");
+                    SetTableCellText(resultTable.Rows[3].Cells[1], data.ElevatorFactoryCode ?? "—");
 
-                    SetTableCellText(resultTable.Rows[2].Cells[1], data.GovernorModel ?? "—");
-                    SetTableCellText(resultTable.Rows[2].Cells[2], data.GovernorFactoryCode ?? "—");
-                    SetTableCellText(resultTable.Rows[2].Cells[3], data.RatedSpeed ?? "—");
-                    SetTableCellText(resultTable.Rows[2].Cells[4], data.EquipmentForm ?? "—");
+                    SetTableCellText(resultTable.Rows[4].Cells[2], data.GovernorModel ?? "—");
+                    SetTableCellText(resultTable.Rows[4].Cells[4], data.GovernorFactoryCode ?? "—");
+                    SetTableCellText(resultTable.Rows[5].Cells[2], data.RatedSpeed ?? "—");
+                    SetTableCellText(resultTable.Rows[5].Cells[4], data.EquipmentForm ?? "—");
 
                     // 新增内容
-                    SetTableCellText(resultTable.Rows[3].Cells[1], data.DownwardElectricalAverageSpeed ?? "—");
-                    SetTableCellText(resultTable.Rows[3].Cells[2], data.DownwardElectricalEvaluation ?? "—");
+                    SetTableCellText(resultTable.Rows[8].Cells[1], data.DownwardElectricalAverageSpeed ?? "—");
+                    SetTableCellText(resultTable.Rows[8].Cells[2], data.DownwardElectricalEvaluation ?? "—");
 
-                    SetTableCellText(resultTable.Rows[4].Cells[1], data.DownwardMechanicalAverageSpeed ?? "—");
-                    SetTableCellText(resultTable.Rows[4].Cells[2], data.DownwardMechanicalEvaluation ?? "—");
+                    SetTableCellText(resultTable.Rows[9].Cells[1], data.DownwardMechanicalAverageSpeed ?? "—");
+                    SetTableCellText(resultTable.Rows[9].Cells[2], data.DownwardMechanicalEvaluation ?? "—");
 
-                    SetTableCellText(resultTable.Rows[5].Cells[1], data.UpwardElectricalAverageSpeed ?? "—");
-                    SetTableCellText(resultTable.Rows[5].Cells[2], data.UpwardElectricalEvaluation ?? "—");
+                    SetTableCellText(resultTable.Rows[10].Cells[1], data.UpwardElectricalAverageSpeed ?? "—");
+                    SetTableCellText(resultTable.Rows[10].Cells[2], data.UpwardElectricalEvaluation ?? "—");
 
-                    SetTableCellText(resultTable.Rows[6].Cells[1], data.UpwardMechanicalAverageSpeed ?? "—");
-                    SetTableCellText(resultTable.Rows[6].Cells[2], data.UpwardMechanicalEvaluation ?? "—");
+                    SetTableCellText(resultTable.Rows[11].Cells[1], data.UpwardMechanicalAverageSpeed ?? "—");
+                    SetTableCellText(resultTable.Rows[11].Cells[2], data.UpwardMechanicalEvaluation ?? "—");
 
-                    SetTableCellText(resultTable.Rows[7].Cells[1], data.ElectricalSafetyDevice1 ?? "—");
-                    SetTableCellText(resultTable.Rows[7].Cells[2], data.ElectricalSafetyDevice2 ?? "—");
+                    SetTableCellText(resultTable.Rows[12].Cells[1], data.ElectricalSafetyDevice1 ?? "—");
+                    SetTableCellText(resultTable.Rows[12].Cells[2], data.ElectricalSafetyDevice2 ?? "—");
                 }
 
                 // 保存报告
